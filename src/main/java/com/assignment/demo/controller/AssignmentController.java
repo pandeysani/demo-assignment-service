@@ -1,5 +1,4 @@
 package com.assignment.demo.controller;
-
 import com.assignment.demo.service.AssignmentService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -23,7 +21,6 @@ import java.net.URL;
 public class AssignmentController {
     @Autowired
     private AssignmentService assignmentService;
-
 
     @GetMapping( value = "/getGeoObject", produces = MediaType.APPLICATION_JSON_VALUE)
     public  ResponseEntity<JsonObject> getGeoIP()  {
@@ -50,6 +47,11 @@ public class AssignmentController {
             FileOutputStream outputStream = new FileOutputStream("text.csv");
             outputStream.write(writer.toString().getBytes());
             outputStream.close();
+        } catch (IOException e) {
+            System.out.println(e);
+            return null;
+        } finally {
+            writer.close();
         }
         return writer.toString();
     }
